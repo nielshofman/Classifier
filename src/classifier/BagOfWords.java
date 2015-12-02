@@ -5,7 +5,7 @@ import java.util.*;
 public class BagOfWords {
 	
 	public HashMap<BagOfWords, Integer> bags = new HashMap<BagOfWords, Integer>();
-	public List<String> words;
+	public Map<String, Integer> words;
 	public int id;
 	public String name;
 	
@@ -19,13 +19,28 @@ public class BagOfWords {
 			}
 		}
 		this.name = name;
-		words = new LinkedList<String>();
+		words = new HashMap<String, Integer>();
 	}
 	
-	private void addWords(List<String> in){
-		for(String word : in) {
-			words.add(word);
-		}
+	public void addWords(List<String> in){
+			for(String word : in) {
+				if(words.isEmpty()){
+					words.put(word,1);
+				}
+				else{
+					words.put(word,words.get(word)+1);
+				}
+			}
 	}
-
+	
+	public int countWords(){
+		int amount = 0;
+		for (int f : words.values()){
+			amount += f;
+		}
+		return amount;
+	}
+	
 }
+
+
