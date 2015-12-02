@@ -9,6 +9,7 @@ public class Classifier {
 	private List<String> classifiedList;
 	private List<BagOfWords> bags;
 	private BagOfWords winningBag;
+	private HashMap<String, Integer> mapje = new HashMap<String, Integer>();
 
 	
 	public Classifier(List<String> words, List<BagOfWords> bags){
@@ -28,9 +29,12 @@ public class Classifier {
 	}
 	
 	public void classifyPerBag(List<String> unClassified, BagOfWords bag){
-		
+		List<Integer> waardes = new LinkedList<Integer>();
 		for(String word : unClassified){
-			
+			if (mapje.containsKey(word)) {
+				waardes.add((mapje.get(word)+1)/(mapje.size()+2));
+			}
+		
 		}
 	}
 	
