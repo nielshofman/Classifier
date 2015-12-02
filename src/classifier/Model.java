@@ -8,11 +8,8 @@ public class Model {
 	
 	public static void main(String[] args) {
 		
-		
 
-	}
 	
-	public int countBag(bags){
 		
 	}
 
