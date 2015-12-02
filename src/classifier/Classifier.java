@@ -8,6 +8,10 @@ public class Classifier {
 	private List<String> tokenizedList;
 	private List<String> classifiedList;
 	
+	public Classifier(){
+		
+	}
+	
 	public static void main(String[] args) {
         
     }
