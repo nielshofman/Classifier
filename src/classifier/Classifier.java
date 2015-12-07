@@ -17,7 +17,6 @@ public class Classifier {
 	}
 	
 	public void classify(List<String> unClassified){
-		
 		for (BagOfWords bag : bags){
 			probabilities.put(bag ,classifyPerBag(unClassified, bag));
 		}
@@ -25,11 +24,11 @@ public class Classifier {
 	
 	public double classifyPerBag(List<String> unClassified, BagOfWords bag){
 		List<Integer> waardes = new LinkedList<Integer>();
-		double chanceOfBag = 1; 
+		double chanceOfBag = 1;
 		for(String word : unClassified){
 			if (mapje.containsKey(word)) {
 				waardes.add((mapje.get(word)+1)/(mapje.size()+2));
-			}	
+			}
 		}
 		for(int i = 0; i < waardes.size(); i++){
 				chanceOfBag = chanceOfBag * waardes.get(i);
