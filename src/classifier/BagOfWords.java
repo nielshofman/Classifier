@@ -41,6 +41,8 @@ public class BagOfWords {
 		return amount;
 	}
 	
+	
+	
 }
 
 

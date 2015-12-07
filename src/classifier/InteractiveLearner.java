@@ -9,23 +9,32 @@ public class InteractiveLearner {
 
 	public static void main(String[] args) {
 		
-		tokenize("<author> = henkdegroot@hotmail.com Heee    &^&*^*)_+:}   FI=X dEZ*e && ShizZlE $#%^&");
+		Scanner user_input = new Scanner( System.in);
+		String input;
+		input = user_input.next();
+		System.out.print(input);
+		user_input.close();
+		//tokenize("<author> = henkdegroot@hotmail.com Heee    &^&*^*)_+:}   FI=X dEZ*e && ShizZlE $#%^&");
 		
 	}
 	
-	public void tokenize(String in){
+	public List<String> tokenize(String in){
 		
-		String out = "";
 		StringTokenizer st = new StringTokenizer(in, "=;*/!@#$%^&*()-=_+[]{}|;,/:<>?");
 		while(st.hasMoreTokens()) {
 			String val = st.nextToken();
+			val.toLowerCase().replaceAll(" +", " ");
 			tokenizedList.add(val);
-			out = out + val;
+			
 		} 
+		return tokenizedList;
 		
-		System.out.println(out.toLowerCase().replaceAll(" +", " "));
 		
 	}
 	
+	
 
 }
+//System.out.println(out.toLowerCase().replaceAll(" +", " "));
+//out = out + val;
+//String out = "";
