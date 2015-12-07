@@ -7,34 +7,27 @@ public class InteractiveLearner {
 	
 	public List<String> tokenizedList;
 
-	public static void main(String[] args) {
-		
-		Scanner user_input = new Scanner( System.in);
-		String input;
-		input = user_input.next();
-		System.out.print(input);
-		user_input.close();
-		//tokenize("<author> = henkdegroot@hotmail.com Heee    &^&*^*)_+:}   FI=X dEZ*e && ShizZlE $#%^&");
-		
+	public InteractiveLearner() {
+		tokenizedList = new LinkedList<String>();
 	}
 	
-	public List<String> tokenize(String in){
-		
+	public static void main(String[] args) {
+		Scanner user_input = new Scanner(System.in);
+		InteractiveLearner il = new InteractiveLearner();
+		String input;
+		while(user_input.hasNext()) {
+			input = user_input.nextLine();
+			il.tokenize(input);
+		}
+		user_input.close();		
+	}
+	
+	public List<String> tokenize(String in) {
 		StringTokenizer st = new StringTokenizer(in, "=;*/!@#$%^&*()-=_+[]{}|;,/:<>?");
 		while(st.hasMoreTokens()) {
-			String val = st.nextToken();
-			val.toLowerCase().replaceAll(" +", " ");
+			String val = st.nextToken().toLowerCase().replaceAll(" +", " ");
 			tokenizedList.add(val);
-			
 		} 
 		return tokenizedList;
-		
-		
 	}
-	
-	
-
 }
-//System.out.println(out.toLowerCase().replaceAll(" +", " "));
-//out = out + val;
-//String out = "";
