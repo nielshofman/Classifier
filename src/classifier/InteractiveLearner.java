@@ -15,8 +15,8 @@ public class InteractiveLearner {
 		Scanner user_input = new Scanner(System.in);
 		InteractiveLearner il = new InteractiveLearner();
 		String input;
-		if(user_input.hasNext()) {
-			input = user_input.nextLine();
+		while(user_input.hasNext()) {
+			input = user_input.next();
 			il.tokenize(input);
 		}
 		user_input.close();		
@@ -27,7 +27,7 @@ public class InteractiveLearner {
 		while(st.hasMoreTokens()) {
 			String val = st.nextToken().toLowerCase().replaceAll(" +", " ");
 			tokenizedList.add(val);
-		} 
+		}
 		return tokenizedList;
 	}
 }
