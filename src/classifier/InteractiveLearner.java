@@ -15,15 +15,15 @@ public class InteractiveLearner {
 		Scanner user_input = new Scanner(System.in);
 		InteractiveLearner il = new InteractiveLearner();
 		String input;
-		while(user_input.hasNext()) {
+		if(user_input.hasNext()) {
 			input = user_input.nextLine();
 			il.tokenize(input);
 		}
 		user_input.close();		
 	}
-	
+
 	public List<String> tokenize(String in) {
-		StringTokenizer st = new StringTokenizer(in, "=;*/!@#$%^&*()-=_+[]{}|;,/:<>?");
+		StringTokenizer st = new StringTokenizer(in, "=;*/!@#$%^&*()-=_+[]{}|;,/:<>?1234567890");
 		while(st.hasMoreTokens()) {
 			String val = st.nextToken().toLowerCase().replaceAll(" +", " ");
 			tokenizedList.add(val);
