@@ -18,7 +18,7 @@ public class Classifier {
 	
 	public void classify(List<String> unClassified){
 		for (BagOfWords bag : bags){
-			probabilities.put(bag ,classifyPerBag(unClassified, bag));
+			probabilities.put(bag, classifyPerBag(unClassified, bag));
 		}
 	}
 	

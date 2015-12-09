@@ -16,6 +16,7 @@ public class BagOfWords {
 		for(int q = 1; q > 0; q++){
 			if(!bags.containsValue(q)){
 				bags.put(this, q);
+				break;
 			}
 		}
 		this.name = name;
@@ -23,14 +24,14 @@ public class BagOfWords {
 	}
 	
 	public void addWords(List<String> in){
-			for(String word : in) {
-				if(words.isEmpty()){
-					words.put(word,1);
-				}
-				else{
-					words.put(word,words.get(word)+1);
-				}
+		for(String word : in) {
+			if(words.isEmpty()){
+				words.put(word,1);
 			}
+			else{
+				words.put(word,words.get(word)+1);
+			}
+		}
 	}
 	
 	public int countWords(){

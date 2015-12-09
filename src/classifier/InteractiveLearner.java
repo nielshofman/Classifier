@@ -22,5 +22,4 @@ public class InteractiveLearner {
 	public List<String> getWords() {
 		return tokenizedList;
 	}
-
 }
