@@ -46,6 +46,7 @@ public class InteractiveLearner {
 		Model ml = new Model(2);
 		InteractiveLearner il = new InteractiveLearner();
 		il.tokenize(ml.getFile(Path.path + "/Mannentest/M-test11.txt"));
+		il.removeSpamwords();
 		System.out.println(il.getWords());
 	}
 
