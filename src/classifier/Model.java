@@ -14,29 +14,34 @@ public class Model {
 	public List<BagOfWords> bags;
 	public InteractiveLearner il;
 	
+	
 	public Model(int aantal) {
 		il = new InteractiveLearner();
 	}
 	
-	private String getFile(String fileName){
-		
-		  String result = "";
-			
-		  ClassLoader classLoader = getClass().getClassLoader();
-		  try {
-			result = IOUtils.toString(classLoader.getResourceAsStream(fileName));
-		  } catch (IOException e) {
-			e.printStackTrace();
-		  }
-			
-		  return result;
-			
-	  }
+	
+	
+	public String getFile(String fileName) throws IOException{
+		BufferedReader in = new BufferedReader(new FileReader(fileName));
+		String line;
+		String lines = "";
+		while((line = in.readLine()) != null)
+		{
+		    lines = lines + line;
+		}
+		in.close();
+		return lines;
+	}
+	
+	
+	
 	
 	
 	public static void main(String[] args) throws IOException {
 		Model ml = new Model(3);
-		
+		InteractiveLearner il = new InteractiveLearner();
+		il.tokenize(ml.getFile(Path.path + "/Mannentest/M-test11.txt"));
+		System.out.println(il.getWords());
 		/*Scanner user_input = new Scanner(System.in);
 		Model model = new Model(2);
 		InteractiveLearner il = new InteractiveLearner();
