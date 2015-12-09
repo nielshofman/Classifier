@@ -19,7 +19,7 @@ public class Model {
 		il = new InteractiveLearner();
 	}
 	
-	
+	public void getFiles()
 	
 	public String getFile(String fileName) throws IOException{
 		BufferedReader in = new BufferedReader(new FileReader(fileName));
