@@ -9,7 +9,6 @@ public class Model {
 	
 	public Model(int aantal) {
 		il = new InteractiveLearner();
-		
 	}
 	
 	public static void main(String[] args) {

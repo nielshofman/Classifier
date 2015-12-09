@@ -11,6 +11,11 @@ public class InteractiveLearner {
 		tokenizedList = new LinkedList<String>();
 	}
 
+	public void removeSpamwords() {
+		int count = tokenizedList.size();
+		
+	}
+	
 	public void tokenize(String in) {
 		StringTokenizer st = new StringTokenizer(in, "=;*/!@#$%^&*()-=_+[]{}|;,/:<>?1234567890");
 		while(st.hasMoreTokens()) {
