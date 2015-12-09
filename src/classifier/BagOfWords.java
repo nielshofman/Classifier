@@ -29,7 +29,8 @@ public class BagOfWords {
 				words.put(word,1);
 			}
 			else{
-				words.put(word,words.get(word)+1);
+				int number = words.get(word) + 1;
+				words.put(word, number);
 			}
 		}
 	}
@@ -41,9 +42,4 @@ public class BagOfWords {
 		}
 		return amount;
 	}
-	
-	
-	
 }
-
-
