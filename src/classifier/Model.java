@@ -10,7 +10,7 @@ public class Model {
 	public static final String menTestLink = "Mannentest/";
 	public static final String menTraingLink = "Mannentrain/";
 	public static final String womenTestLink = "Vrouwentest/";
-	public static final String womenTrainingLink = "Womentrain";
+	public static final String womenTrainingLink = "Womentrain/";
 	public List<BagOfWords> bags;
 	public InteractiveLearner il;
 	public List<String> listOfFileNames;
@@ -23,23 +23,22 @@ public class Model {
 		files = new LinkedList<String>();
 	}
 	
-	public List<String> getString() throws IOException{
-		this.getFileNames();
+	public List<String> getString(String trainTest) throws IOException{
+		this.getFileNames(trainTest);
 		for(String iets : listOfFileNames){
-			il.tokenize(this.getFile(Path.path + "Mannentest/" + iets));
+			il.tokenize(this.getFile(Path.path + trainTest + iets));
 		}
 		return files;
 	}
 	
-	public void getFileNames(){
-	File folder = new File(Path.path + "Mannentest/");
+	public void getFileNames(String trainTest){
+	File folder = new File(Path.path + trainTest);
 	File[] listOfFiles = folder.listFiles();
 	 for (int i = 0; i < listOfFiles.length; i++) {
 	      if (listOfFiles[i].isFile()) {
 	        listOfFileNames.add(listOfFiles[i].getName());
 	      }
 	 }
-	 System.out.println(listOfFileNames.toString());
 	 
 	}
 	
@@ -63,7 +62,6 @@ public class Model {
 	public static void main(String[] args) throws IOException {
 		Model ml = new Model(3);
 		//ml.getFileNames();
-		System.out.println(ml.getString().toString());
 		//il.tokenize(ml.getFile(Path.path + "/Mannentest/M-test11.txt"));
 		//System.out.println(il.getWords());
 		/*Scanner user_input = new Scanner(System.in);
