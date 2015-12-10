@@ -49,4 +49,8 @@ public class BagOfWords {
 		} else { 
 		return null; }
 	}
+	
+	public String getName(){
+		return this.name;
+	}
 }

@@ -7,33 +7,48 @@ import sun.misc.IOUtils;
 
 public class Model {
 
-	public static final String menTestLink = "Mannentest/";
-	public static final String menTraingLink = "Mannentrain/";
-	public static final String womenTestLink = "Vrouwentest/";
-	public static final String womenTrainingLink = "Womentrain/";
+	public static final String menTestPath = "Mannentest/";
+	public static final String menTraingPath = "Mannentrain/";
+	public static final String womenTestPath = "Vrouwentest/";
+	public static final String womenTrainingPath = "Womentrain/";
 	public List<BagOfWords> bags;
 	public InteractiveLearner il;
 	public List<String> listOfFileNames;
 	public List<String> files;
 	public BagOfWords bag1;
 	public BagOfWords bag2;
+	public List<String> tokenizedList;
 	
 	
-	public Model(int aantal,) {
+	public Model(int aantal) {
 		il = new InteractiveLearner();
 		listOfFileNames = new LinkedList<String>();
 		files = new LinkedList<String>();
-		bag1 = new BagOfWords("Mannen");
-		bag2 = new BagOfWords("Vrouwen");
+		Scanner user_input = new Scanner(System.in);
+		String input;
+		while(user_input.hasNext()) {
+			input = user_input.next();
+			if(input.equals("break123")){
+				break;
+			} else {
+				new BagOfWords(input);
+			}
+		}
+		user_input.close();
+		
 	}
 	
-	public List<String> getString(String trainTest, String bagName) throws IOException{
-		this.getFileNames(trainTest);
+	public void fillBag(String trainTestPath, String bagName) throws IOException{
+		this.getFileNames(trainTestPath);
 		for(String iets : listOfFileNames){
-			il.tokenize(this.getFile(Path.path + trainTest + iets));
-			if ()
+			il.tokenize(this.getFile(Path.path + trainTestPath + iets));
+			for(int i = 0; i <= bags.size(); i++){
+				if (bags.get(i).getName().equals(bagName)){
+					bags.get(i).addWords(tokenizedList);
+				}	
+			}
 		}
-		return files;
+		
 	}
 	
 	public void getFileNames(String trainTest){
