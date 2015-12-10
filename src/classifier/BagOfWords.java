@@ -7,7 +7,7 @@ public class BagOfWords {
 	public HashMap<BagOfWords, Integer> bags = new HashMap<BagOfWords, Integer>();
 	public Map<String, Integer> words;
 	public int id;
-	public String name;
+	private String name;
 	
 	public BagOfWords(String name){
 		if (bags.isEmpty()) {
@@ -41,5 +41,12 @@ public class BagOfWords {
 			amount += f;
 		}
 		return amount;
+	}
+	
+	public BagOfWords getBag(String name) {
+		if(name.equals(this.name)){
+			return this;
+		} else { 
+		return null; }
 	}
 }
