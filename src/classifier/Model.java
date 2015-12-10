@@ -19,12 +19,13 @@ public class Model {
 	public BagOfWords bag2;
 	
 	
-	public Model(int aantal,) {
+	public Model(int aantal) {
 		il = new InteractiveLearner();
 		listOfFileNames = new LinkedList<String>();
 		files = new LinkedList<String>();
-		bag1 = new BagOfWords("Mannen");
-		bag2 = new BagOfWords("Vrouwen");
+		for(int i = 0; i < aantal; i++) {
+			
+		}
 	}
 	
 	public List<String> getString(String trainTest, String bagName) throws IOException{
