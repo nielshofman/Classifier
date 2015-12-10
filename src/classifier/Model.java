@@ -7,10 +7,10 @@ import sun.misc.IOUtils;
 
 public class Model {
 
-	public static final String menTestLink = "C:/Users/Niels/git/Classifier/src/train/Mannentrain/M-test11.txt";
-	public static final String menTestName = "Mentest";
-	public static final String womenTestLink = "https://github.com/nielshofman/Classifier/tree/master/src/train/Vrouwentrain";
-	public static final String womenTestName = "WomenTest";
+	public static final String menTestLink = "Mannentest/";
+	public static final String menTraingLink = "Mannentrain/";
+	public static final String womenTestLink = "Vrouwentest/";
+	public static final String womenTrainingLink = "Womentrain";
 	public List<BagOfWords> bags;
 	public InteractiveLearner il;
 	public List<String> listOfFileNames;
@@ -26,7 +26,7 @@ public class Model {
 	public List<String> getString() throws IOException{
 		this.getFileNames();
 		for(String iets : listOfFileNames){
-			files.add(this.getFile(Path.path + "Mannentest/" + iets));
+			il.tokenize(this.getFile(Path.path + "Mannentest/" + iets));
 		}
 		return files;
 	}
