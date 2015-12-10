@@ -15,18 +15,23 @@ public class Model {
 	public InteractiveLearner il;
 	public List<String> listOfFileNames;
 	public List<String> files;
+	public BagOfWords bag1;
+	public BagOfWords bag2;
 	
 	
-	public Model(int aantal) {
+	public Model(int aantal,) {
 		il = new InteractiveLearner();
 		listOfFileNames = new LinkedList<String>();
 		files = new LinkedList<String>();
+		bag1 = new BagOfWords("Mannen");
+		bag2 = new BagOfWords("Vrouwen");
 	}
 	
-	public List<String> getString(String trainTest) throws IOException{
+	public List<String> getString(String trainTest, String bagName) throws IOException{
 		this.getFileNames(trainTest);
 		for(String iets : listOfFileNames){
 			il.tokenize(this.getFile(Path.path + trainTest + iets));
+			if ()
 		}
 		return files;
 	}
@@ -42,7 +47,6 @@ public class Model {
 	 
 	}
 	
-	
 	public String getFile(String fileName) throws IOException{
 		BufferedReader in = new BufferedReader(new FileReader(fileName));
 		String line;
@@ -54,7 +58,6 @@ public class Model {
 		in.close();
 		return lines;
 	}
-	
 	
 	
 	
