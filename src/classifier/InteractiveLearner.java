@@ -11,10 +11,12 @@ public class InteractiveLearner {
 		tokenizedList = new LinkedList<String>();
 	}
 
-	public void removeSpamwords() {
+	public void filterWords() {
 		int count = tokenizedList.size();
-		float temp = (float) (count * 0.1);
-		int limit = Math.round(temp);
+		float high = (float) (count * 0.1);
+		int limithigh = Math.round(high);
+		float low = (float) (count * 0.005);
+		int limitlow = Math.round(low);
 		for(String word : tokenizedList) {
 			int tmpcount = 1;
 			for(String woord : tokenizedList) {
@@ -22,7 +24,7 @@ public class InteractiveLearner {
 					tmpcount++;
 				}
 			} 
-			if (tmpcount >= limit) {
+			if (tmpcount >= limithigh | tmpcount <= limitlow) {
 				for(int i = 0; i < tmpcount; i++) {
 					tokenizedList.remove(word);
 				}
@@ -45,8 +47,8 @@ public class InteractiveLearner {
 	public static void main(String[] args) throws IOException {
 		Model ml = new Model(2);
 		InteractiveLearner il = new InteractiveLearner();
-		il.tokenize(ml.getFile(Path.path + "/Mannentest/M-test11.txt"));
-		il.removeSpamwords();
+		il.tokenize(ml.getFile(Path.path + "/test.txt"));
+		il.filterWords();
 		System.out.println(il.getWords());
 	}
 

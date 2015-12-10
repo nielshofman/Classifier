@@ -4,22 +4,13 @@ import java.util.*;
 
 public class BagOfWords {
 	
-	public HashMap<BagOfWords, Integer> bags = new HashMap<BagOfWords, Integer>();
 	public Map<String, Integer> words;
 	public int id;
 	private String name;
 	
-	public BagOfWords(String name){
-		if (bags.isEmpty()) {
-			bags.put(this, 1);
-		}
-		for(int q = 1; q > 0; q++){
-			if(!bags.containsValue(q)){
-				bags.put(this, q);
-				break;
-			}
-		}
+	public BagOfWords(int id, String name){
 		this.name = name;
+		id = this.id;
 		words = new HashMap<String, Integer>();
 	}
 	
