@@ -3,24 +3,19 @@ package classifier;
 import java.io.*;
 import java.util.*;
 
-import sun.misc.IOUtils;
-
 public class Model {
 
 	public static final String menTestPath = "Mannentest/";
-	public static final String menTraingPath = "Mannentrain/";
+	public static final String menTrainPath = "Mannentrain/";
 	public static final String womenTestPath = "Vrouwentest/";
-	public static final String womenTrainingPath = "Womentrain/";
-	public List<BagOfWords> bags;
-	public InteractiveLearner il;
-	public List<String> listOfFileNames;
-	public List<String> tokenizedList;
-	public List<String> files;	
+	public static final String womenTrainPath = "Womentrain/";
+	private List<BagOfWords> bags;
+	private InteractiveLearner il;
+	private List<String> listOfFileNames;
 
 	public Model(int aantal) {
 		il = new InteractiveLearner();
 		listOfFileNames = new LinkedList<String>();
-		files = new LinkedList<String>();
 		bags = new LinkedList<BagOfWords>();
 		Scanner user_input = new Scanner(System.in);
 		for(int i = 0; i < aantal; i++) {
@@ -39,9 +34,9 @@ public class Model {
 		this.getFileNames(trainTestPath);
 		for(String iets : listOfFileNames){
 			il.tokenize(this.getFile(Path.path + trainTestPath + iets));
-			for(int i = 0; i <= bags.size(); i++){
+			for(int i = 0; i < bags.size(); i++){
 				if (bags.get(i).getName().equals(bagName)){
-					bags.get(i).addWords(tokenizedList);
+					bags.get(i).addWords(il.getWords());
 				}	
 			}
 		}
@@ -71,11 +66,18 @@ public class Model {
 		return lines;
 	}
 	
+	public List<BagOfWords> getBags() {
+		return bags;
+	}
 	
 	
 	
 	public static void main(String[] args) throws IOException {
 		Model ml = new Model(2);
+		ml.fillBag(menTrainPath, "man");
+		
+		
+		
 		//ml.getFileNames();
 		//il.tokenize(ml.getFile(Path.path + "/Mannentest/M-test11.txt"));
 		//System.out.println(il.getWords());

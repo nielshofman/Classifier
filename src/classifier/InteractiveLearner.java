@@ -1,5 +1,4 @@
 package classifier;
-// http://www.java-samples.com/showtutorial.php?tutorialid=236
 import java.util.*;
 import java.io.*;
 

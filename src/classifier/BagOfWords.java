@@ -4,8 +4,8 @@ import java.util.*;
 
 public class BagOfWords {
 	
-	public Map<String, Integer> words;
-	public int id;
+	private Map<String, Integer> words;
+	private int id;
 	private String name;
 	
 	public BagOfWords(int id, String name){
@@ -43,5 +43,9 @@ public class BagOfWords {
 	
 	public String getName(){
 		return this.name;
+	}
+	
+	public Map<String, Integer> getBagWords() {
+		return words;
 	}
 }
