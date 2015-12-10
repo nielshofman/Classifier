@@ -25,11 +25,12 @@ public class BagOfWords {
 	
 	public void addWords(List<String> in){
 		for(String word : in) {
-			if(words.isEmpty()){
-				words.put(word,1);
+			if (words.containsKey(word)) {
+				int number = words.get(word) + 1;
+				words.put(word, number);
 			}
-			else{
-				words.put(word,words.get(word)+1);
+			else {
+				words.put(word, 1);
 			}
 		}
 	}
@@ -41,5 +42,4 @@ public class BagOfWords {
 		}
 		return amount;
 	}
-	
 }
