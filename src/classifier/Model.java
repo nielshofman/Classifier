@@ -14,28 +14,25 @@ public class Model {
 	public List<BagOfWords> bags;
 	public InteractiveLearner il;
 	public List<String> listOfFileNames;
-	public List<String> files;
-	public BagOfWords bag1;
-	public BagOfWords bag2;
 	public List<String> tokenizedList;
-	
-	
+	public List<String> files;	
+
 	public Model(int aantal) {
 		il = new InteractiveLearner();
 		listOfFileNames = new LinkedList<String>();
 		files = new LinkedList<String>();
+		bags = new LinkedList<BagOfWords>();
 		Scanner user_input = new Scanner(System.in);
-		String input;
-		while(user_input.hasNext()) {
-			input = user_input.next();
-			if(input.equals("break123")){
+		for(int i = 0; i < aantal; i++) {
+			BagOfWords tmp = null;
+			System.out.println("Geef een naam voor bag nummer " + (i+1));
+			while(user_input.hasNext()) {
+				tmp = new BagOfWords((i+1), user_input.next());
+				bags.add(tmp);
 				break;
-			} else {
-				new BagOfWords(input);
 			}
 		}
 		user_input.close();
-		
 	}
 	
 	public void fillBag(String trainTestPath, String bagName) throws IOException{
@@ -78,7 +75,7 @@ public class Model {
 	
 	
 	public static void main(String[] args) throws IOException {
-		Model ml = new Model(3);
+		Model ml = new Model(2);
 		//ml.getFileNames();
 		//il.tokenize(ml.getFile(Path.path + "/Mannentest/M-test11.txt"));
 		//System.out.println(il.getWords());
