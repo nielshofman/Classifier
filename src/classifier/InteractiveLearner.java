@@ -50,5 +50,4 @@ public class InteractiveLearner {
 		il.filterWords();
 		System.out.println(il.getWords());
 	}
-
 }

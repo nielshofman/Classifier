@@ -8,7 +8,7 @@ public class Model {
 	public static final String menTestPath = "Mannentest/";
 	public static final String menTrainPath = "Mannentrain/";
 	public static final String womenTestPath = "Vrouwentest/";
-	public static final String womenTrainPath = "Womentrain/";
+	public static final String womenTrainPath = "Vrouwentrain/";
 	private List<BagOfWords> bags;
 	private InteractiveLearner il;
 	private List<String> listOfFileNames;
@@ -40,6 +40,8 @@ public class Model {
 				}	
 			}
 		}
+		listOfFileNames.clear();
+		System.out.println("done for " + bagName);
 	}
 	
 	public void getFileNames(String trainTest){
@@ -54,7 +56,7 @@ public class Model {
 	
 	public String getFile(String fileName) throws IOException{
 		BufferedReader in = new BufferedReader(new FileReader(fileName));
-		String line;
+		String line = "";
 		String lines = "";
 		while((line = in.readLine()) != null) {
 		    lines = lines + line;
@@ -70,5 +72,6 @@ public class Model {
 	public static void main(String[] args) throws IOException {
 		Model ml = new Model(2);
 		ml.fillBag(menTrainPath, "man");
+		ml.fillBag(womenTrainPath, "vrouw");
 	}
 }
