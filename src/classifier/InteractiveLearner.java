@@ -37,7 +37,7 @@ public class InteractiveLearner {
 	}
 	
 	public void removeStopwords() {
-		//HI
+		
 	}
 	
 	public void tokenize(String in) {
