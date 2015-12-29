@@ -14,7 +14,7 @@ public class Model {
 	private List<String> listOfFileNames;
 	private Map<String, String> choice;
 	
-	public Model() {
+	public Model() throws IOException {
 		int aantal = 0;
 		il = new InteractiveLearner();
 		listOfFileNames = new LinkedList<String>();
@@ -46,7 +46,8 @@ public class Model {
 			for(int i = 0; i < bags.size(); i++){
 				if (bags.get(i).getName().equals(bagName)){
 					bags.get(i).addWords(il.getWords());
-				}	
+				}
+				il.clearWords();
 			}
 		}
 		listOfFileNames.clear();
