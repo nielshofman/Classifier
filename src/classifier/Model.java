@@ -12,12 +12,14 @@ public class Model {
 	private List<BagOfWords> bags;
 	private InteractiveLearner il;
 	private List<String> listOfFileNames;
+	private Map<String, String> choice;
 	
 	public Model() {
 		int aantal = 0;
 		il = new InteractiveLearner();
 		listOfFileNames = new LinkedList<String>();
 		bags = new LinkedList<BagOfWords>();
+		choice = new HashMap<String, String>();
 		Scanner user_input = new Scanner(System.in);
 		System.out.println("Geef het aantal bags");
 		while(user_input.hasNextInt()) {
@@ -76,10 +78,44 @@ public class Model {
 		return bags;
 	}
 	
+	public void classifyAll(String path) throws IOException{
+		listOfFileNames.clear();
+		choice.clear();
+		this.getFileNames(path);
+		for(String iets : listOfFileNames){
+			il.tokenize(this.getFile(Path.path + path + iets));
+			il.filterWords();
+			this.classify(il.getWords(), iets);
+		}
+	}
+		
+	public void classify(List<String> list, String fileName){
+		Classifier cl = new Classifier(list, bags);
+		cl.classify(list);
+		if(cl.getProbabilities().get(bags.get(0)).equals(cl.getProbabilities().get(bags.get(1)))){
+			choice.put(fileName, "equal");
+		}
+		if(cl.getProbabilities().get(bags.get(0)) > cl.getProbabilities().get(bags.get(1))){
+			choice.put(fileName, "man");
+		}
+		else{
+			choice.put(fileName, "woman");
+		}
+		
+	}
+	
+	public Map<String, String> getChoices(){
+		return choice;
+	}
+	
+	
 	public static void main(String[] args) throws IOException {
 		Model ml = new Model();
 		ml.fillBag(menTrainPath, "man");
 		ml.fillBag(womenTrainPath, "vrouw");
 		System.out.println("Geef pad van bestand(en) in");
+		ml.classifyAll(menTestPath);
+		ml.classifyAll(womenTestPath);
+		ml.getChoices();
 	}
 }
