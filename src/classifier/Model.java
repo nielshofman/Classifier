@@ -115,7 +115,8 @@ public class Model {
 		ml.fillBag(womenTrainPath, "vrouw");
 		System.out.println("Geef pad van bestand(en) in");
 		ml.classifyAll(menTestPath);
+		System.out.println(ml.getChoices());
 		ml.classifyAll(womenTestPath);
-		ml.getChoices();
+		System.out.println(ml.getChoices());
 	}
 }
