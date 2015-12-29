@@ -1,7 +1,9 @@
 package classifier;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.*;
+import BigFunctions;
 
 public class Model {
 
@@ -47,8 +49,8 @@ public class Model {
 				if (bags.get(i).getName().equals(bagName)){
 					bags.get(i).addWords(il.getWords());
 				}
-				il.clearWords();
 			}
+			il.clearWords();
 		}
 		listOfFileNames.clear();
 		System.out.println("done for " + bagName);
@@ -93,28 +95,31 @@ public class Model {
 	public void classify(List<String> list, String fileName){
 		Classifier cl = new Classifier(list, bags);
 		cl.classify(list);
-		if(cl.getProbabilities().get(bags.get(0)).equals(cl.getProbabilities().get(bags.get(1)))){
+		BigDecimal a = cl.getProbabilities().get(bags.get(0));
+		BigDecimal b = cl.getProbabilities().get(bags.get(1));
+		if(a.compareTo(b) < 0){
+			choice.put(fileName, bags.get(0).getName());
+		}
+		else if(cl.getProbabilities().get(bags.get(0)).compareTo(cl.getProbabilities().get(bags.get(1))) > 0){
+			choice.put(fileName, bags.get(1).getName());
+		}
+		else if(cl.getProbabilities().get(bags.get(0)).compareTo(cl.getProbabilities().get(bags.get(1))) == 0){
 			choice.put(fileName, "equal");
 		}
-		if(cl.getProbabilities().get(bags.get(0)) > cl.getProbabilities().get(bags.get(1))){
-			choice.put(fileName, "man");
+
+		else {
+			System.out.println("Poep");
 		}
-		else{
-			choice.put(fileName, "woman");
-		}
-		
 	}
 	
 	public Map<String, String> getChoices(){
 		return choice;
 	}
 	
-	
 	public static void main(String[] args) throws IOException {
 		Model ml = new Model();
 		ml.fillBag(menTrainPath, "man");
 		ml.fillBag(womenTrainPath, "vrouw");
-		System.out.println("Geef pad van bestand(en) in");
 		ml.classifyAll(menTestPath);
 		System.out.println(ml.getChoices());
 		ml.classifyAll(womenTestPath);

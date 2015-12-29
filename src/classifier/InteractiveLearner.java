@@ -58,7 +58,7 @@ public class InteractiveLearner {
 	}
 	
 	public void tokenize(String in) {
-		StringTokenizer st = new StringTokenizer(in, "= ;*/!@#$%^&*()-=_+[]{}|;,.:\"<>?1234567890");
+		StringTokenizer st = new StringTokenizer(in, "= ;*/!@#$%^`~&*()-=_+[]{}|;,.:\"<>?1234567890");
 		while(st.hasMoreTokens()) {
 			String val = st.nextToken().toLowerCase().replaceAll(" +", " ");
 			tokenizedList.add(val);
