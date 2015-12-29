@@ -12,7 +12,7 @@ public class Model {
 	private List<BagOfWords> bags;
 	private InteractiveLearner il;
 	private List<String> listOfFileNames;
-	
+	//HI
 	public Model() {
 		int aantal = 0;
 		il = new InteractiveLearner();
