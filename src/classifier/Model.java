@@ -12,12 +12,18 @@ public class Model {
 	private List<BagOfWords> bags;
 	private InteractiveLearner il;
 	private List<String> listOfFileNames;
-
-	public Model(int aantal) {
+	
+	public Model() {
+		int aantal = 0;
 		il = new InteractiveLearner();
 		listOfFileNames = new LinkedList<String>();
 		bags = new LinkedList<BagOfWords>();
 		Scanner user_input = new Scanner(System.in);
+		System.out.println("Geef het aantal bags");
+		while(user_input.hasNextInt()) {
+			aantal = user_input.nextInt();
+			break;
+		}
 		for(int i = 0; i < aantal; i++) {
 			BagOfWords tmp = null;
 			System.out.println("Geef een naam voor bag nummer " + (i+1));
@@ -34,6 +40,7 @@ public class Model {
 		this.getFileNames(trainTestPath);
 		for(String iets : listOfFileNames){
 			il.tokenize(this.getFile(Path.path + trainTestPath + iets));
+			il.filterWords();
 			for(int i = 0; i < bags.size(); i++){
 				if (bags.get(i).getName().equals(bagName)){
 					bags.get(i).addWords(il.getWords());
@@ -70,8 +77,9 @@ public class Model {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Model ml = new Model(2);
+		Model ml = new Model();
 		ml.fillBag(menTrainPath, "man");
 		ml.fillBag(womenTrainPath, "vrouw");
+		System.out.println("Geef pad van bestand(en) in");
 	}
 }

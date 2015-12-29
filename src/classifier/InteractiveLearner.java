@@ -11,6 +11,11 @@ public class InteractiveLearner {
 	}
 
 	public void filterWords() {
+		this.removeWordsOnAccurance();
+		this.removeStopwords();
+	}
+	
+	public void removeWordsOnAccurance() {
 		int count = tokenizedList.size();
 		float high = (float) (count * 0.1);
 		int limithigh = Math.round(high);
@@ -31,6 +36,10 @@ public class InteractiveLearner {
 		}
 	}
 	
+	public void removeStopwords() {
+		
+	}
+	
 	public void tokenize(String in) {
 		StringTokenizer st = new StringTokenizer(in, "= ;*/!@#$%^&*()-=_+[]{}|;,.:\"<>?1234567890");
 		while(st.hasMoreTokens()) {
@@ -44,7 +53,7 @@ public class InteractiveLearner {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		Model ml = new Model(2);
+		Model ml = new Model();
 		InteractiveLearner il = new InteractiveLearner();
 		il.tokenize(ml.getFile(Path.path + "/test.txt"));
 		il.filterWords();
