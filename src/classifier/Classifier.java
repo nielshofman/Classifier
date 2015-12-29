@@ -6,13 +6,15 @@ public class Classifier {
 	
 	public List<String> tokenizedList;
 	private List<BagOfWords> bags;
-	private HashMap<BagOfWords, Double> probabilities;
+	private Map<BagOfWords, Double> probabilities;
 
 	
 	public Classifier(List<String> words, List<BagOfWords> bags){
 		this.bags = new LinkedList<BagOfWords>();
 		this.tokenizedList = words;
+		this.probabilities = new HashMap<BagOfWords, Double>();
 	}
+	
 	
 	public void classify(List<String> unClassified){
 		for (BagOfWords bag : bags){
@@ -32,6 +34,10 @@ public class Classifier {
 				chanceOfBag = chanceOfBag + (Math.log10(waardes.get(i)));
 			}
 		return chanceOfBag;
+	}
+	
+	public Map<BagOfWords, Double> getProbabilities(){
+		return this.probabilities;
 	}
 	
 	public static void main(String[] args) {
