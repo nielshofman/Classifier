@@ -10,34 +10,41 @@ public class InteractiveLearner {
 		tokenizedList = new LinkedList<String>();
 	}
 
-	public void filterWords() {
+	public void filterWords() throws IOException {
 		this.removeWordsOnAccurance();
 		this.removeStopwords();
 	}
 	
 	public void removeWordsOnAccurance() {
+		Set<String> list = new HashSet<String>();
 		int count = tokenizedList.size();
 		float high = (float) (count * 0.1);
 		int limithigh = Math.round(high);
 		float low = (float) (count * 0.005);
 		int limitlow = Math.round(low);
 		for(String word : tokenizedList) {
-			int tmpcount = 1;
+			int tmpcount = 0;
 			for(String woord : tokenizedList) {
 				if (woord.equals(word)) {
 					tmpcount++;
 				}
 			} 
 			if (tmpcount >= limithigh | tmpcount <= limitlow) {
-				for(int i = 0; i < tmpcount; i++) {
-					tokenizedList.remove(word);
-				}
+				list.add(word);
 			}
 		}
+		tokenizedList.removeAll(list);
 	}
 	
-	public void removeStopwords() {
-		
+	public void removeStopwords() throws IOException {
+		BufferedReader in = new BufferedReader(new FileReader(Path.path + "filter/stopwords.txt"));
+		String word = "";
+		while((word = in.readLine()) != null) {
+			if(tokenizedList.contains(word)){
+				tokenizedList.remove(word);
+			}
+		}
+		in.close();
 	}
 	
 	public void tokenize(String in) {
