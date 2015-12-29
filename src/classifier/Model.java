@@ -3,7 +3,6 @@ package classifier;
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
-import BigFunctions;
 
 public class Model {
 
@@ -15,6 +14,7 @@ public class Model {
 	private InteractiveLearner il;
 	private List<String> listOfFileNames;
 	private Map<String, String> choice;
+
 	
 	public Model() throws IOException {
 		int aantal = 0;
@@ -100,10 +100,10 @@ public class Model {
 		if(a.compareTo(b) < 0){
 			choice.put(fileName, bags.get(0).getName());
 		}
-		else if(cl.getProbabilities().get(bags.get(0)).compareTo(cl.getProbabilities().get(bags.get(1))) > 0){
+		else if(a.compareTo(b) > 0){
 			choice.put(fileName, bags.get(1).getName());
 		}
-		else if(cl.getProbabilities().get(bags.get(0)).compareTo(cl.getProbabilities().get(bags.get(1))) == 0){
+		else if(a.compareTo(b) == 0){
 			choice.put(fileName, "equal");
 		}
 

@@ -9,9 +9,11 @@ public class Classifier {
 	private List<BagOfWords> bags;
 	private Map<BagOfWords, BigDecimal> probabilities;
 	private int vocabulaire;
+	public BigFunctions calc;
 
 	public Classifier(List<String> words, List<BagOfWords> bags){
 		this.bags = bags;
+		calc = new BigFunctions();
 		this.tokenizedList = words;
 		this.probabilities = new HashMap<BagOfWords, BigDecimal>();
 	}
@@ -35,7 +37,7 @@ public class Classifier {
 			}
 		}
 		for(int i = 0; i < waardes.size(); i++){
-				chanceOfBag = chanceOfBag.multiply(waardes.get(i));
+				chanceOfBag = chanceOfBag.add(calc.ln(waardes.get(i), 10));
 			}
 		return chanceOfBag;
 	}

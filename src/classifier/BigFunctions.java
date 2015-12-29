@@ -210,7 +210,7 @@ public final class BigFunctions
     /**
      * Compute the natural logarithm of x to a given scale, x > 0.
      */
-    public static BigDecimal ln(BigDecimal x, int scale)
+    public BigDecimal ln(BigDecimal x, int scale)
     {
         // Check that x > 0.
         if (x.signum() <= 0) {
