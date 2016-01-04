@@ -68,8 +68,4 @@ public class Classifier {
 	public Map<BagOfWords, BigDecimal> getProbabilities(){
 		return this.probabilities;
 	}
-	
-	public static void main(String[] args) {
-        
-    }
 }

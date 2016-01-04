@@ -15,7 +15,6 @@ public class Model {
 	private List<String> listOfFileNames;
 	private Map<String, String> choice;
 
-	
 	public Model() throws IOException {
 		int aantal = 0;
 		il = new InteractiveLearner();
@@ -105,10 +104,6 @@ public class Model {
 		}
 		else if(a.compareTo(b) == 0){
 			choice.put(fileName, "equal");
-		}
-
-		else {
-			System.out.println("Poep");
 		}
 	}
 	

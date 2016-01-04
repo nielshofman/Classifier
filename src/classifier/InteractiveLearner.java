@@ -7,7 +7,6 @@ public class InteractiveLearner {
 	public List<String> tokenizedList;
 	public Set<String> list;
 
-	
 	public InteractiveLearner() throws IOException {
 		tokenizedList = new LinkedList<String>();
 		list = new HashSet<String>();
@@ -24,7 +23,6 @@ public class InteractiveLearner {
 	}
 	
 	public void filterWords() throws IOException {
-		//this.removeStopwords();
 		this.removeWordsOnAccurance();
 	}
 	
