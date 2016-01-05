@@ -72,7 +72,7 @@ public class InteractiveLearner {
 		tokenizedList.clear();
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		Model ml = new Model();
 		InteractiveLearner il = new InteractiveLearner();
 		il.tokenize(ml.getFile(Path.path + "/test.txt"));

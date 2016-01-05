@@ -1,5 +1,9 @@
 package classifier;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.*;
 
 public class BagOfWords {
@@ -32,6 +36,14 @@ public class BagOfWords {
 			amount += f;
 		}
 		return amount;
+	}
+	
+	public void readFile() throws IOException, ClassNotFoundException {
+		FileInputStream fileIn = new FileInputStream(Path.path + name);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        words = (Map<String, Integer>) in.readObject();
+        in.close();
+        fileIn.close();
 	}
 	
 	public BagOfWords getBag(String name) {
