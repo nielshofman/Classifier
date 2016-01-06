@@ -2,8 +2,10 @@ package classifier;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 public class BagOfWords {
@@ -46,15 +48,20 @@ public class BagOfWords {
         fileIn.close();
 	}
 	
-	public BagOfWords getBag(String name) {
-		if(name.equals(this.name)){
-			return this;
-		} else { 
-		return null; }
+	public void writeToFile() throws IOException {
+		FileOutputStream fileOut = new FileOutputStream(Path.path + name);
+		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		out.writeObject(this.getBagWords());
+		out.close();
+		fileOut.close();
 	}
 	
 	public String getName(){
 		return this.name;
+	}
+	
+	public void removeWord(String word) {
+		words.remove(word);
 	}
 	
 	public Map<String, Integer> getBagWords() {

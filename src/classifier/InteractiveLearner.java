@@ -22,14 +22,10 @@ public class InteractiveLearner {
 		in.close();
 	}
 	
-	public void filterWords() throws IOException {
-		this.removeWordsOnAccurance();
-	}
-	
 	public void removeWordsOnAccurance() {
 		Set<String> list = new HashSet<String>();
 		int count = tokenizedList.size();
-		float high = (float) (count * 0.1);
+		float high = (float) (count * 0.05);
 		int limithigh = Math.round(high);
 		float low = (float) (count * 0.005);
 		int limitlow = Math.round(low);
@@ -45,14 +41,6 @@ public class InteractiveLearner {
 			}
 		}
 		tokenizedList.removeAll(list);
-	}
-	
-	public void removeStopwords() {
-		for(String word : list) {
-			if(tokenizedList.contains(word)){
-				tokenizedList.remove(word);
-			}
-		}
 	}
 	
 	public void tokenize(String in) {
@@ -76,7 +64,7 @@ public class InteractiveLearner {
 		Model ml = new Model();
 		InteractiveLearner il = new InteractiveLearner();
 		il.tokenize(ml.getFile(Path.path + "/test.txt"));
-		il.filterWords();
+		il.removeWordsOnAccurance();
 		System.out.println(il.getWords());
 	}
 }

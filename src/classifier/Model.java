@@ -10,12 +10,15 @@ public class Model {
 	public static final String menTrainPath = "Mannentrain/";
 	public static final String womenTestPath = "Vrouwentest/";
 	public static final String womenTrainPath = "Vrouwentrain/";
+	public static final String spamTrainPath = "Spamtrain/";
+	public static final String spamTestPath = "Spamtest/";
+	public static final String mailTrainPath = "Mailtrain/";
+	public static final String mailTestPath = "Mailtest/";
 	private List<BagOfWords> bags;
 	private List<String> bagNames;
 	private InteractiveLearner il;
 	private List<String> listOfFileNames;
 	private Map<String, String> choice;
-	private List<String> notFilledBags;
 
 	public Model() throws IOException, ClassNotFoundException {
 		int aantal = 0;
@@ -24,7 +27,6 @@ public class Model {
 		bags = new LinkedList<BagOfWords>();
 		choice = new HashMap<String, String>();
 		bagNames = new LinkedList<String>();
-		notFilledBags = new LinkedList<String>();
 		Scanner user_input = new Scanner(System.in);
 		System.out.println("Geef het aantal bags");
 		while(user_input.hasNextInt()) {
@@ -44,9 +46,13 @@ public class Model {
 						bags.add(tmp);
 						bagNames.add(bagName);
 						if(listOfFileNames.contains(bagName)) {
-							bags.get(i+1).readFile();
+							bags.get(i).readFile();
 						}else{
-							notFilledBags.add(bagName);
+							user_input.nextLine();
+							System.out.println("Geef pad van de map met traindata van " + bagName);
+							String path = user_input.nextLine();
+							listOfFileNames.clear();
+							fillBag(path, bagName);
 						}
 						p = 1;
 					}
@@ -56,34 +62,73 @@ public class Model {
 					break;
 				}
 			}
-		}
-		/*for(int i = 0; i < notFilledBags.size(); i++){
-			System.out.println("Geef pad van map van traindata van " + notFilledBags.get(i));
-			while(user_input.hasNext()) {
-				String path = user_input.nextLine();
-				fillBag(path, notFilledBags.get(i));
-				path = "";
-				break;
+		}/*
+		user_input.nextLine();
+		System.out.println("Geef systeempad van het bestand dat geklassificeerd moet worden");
+		while(user_input.hasNext()) {
+			String file = user_input.next();
+			this.classifyFile(file);
+			System.out.println("Is dit juist? Toets J voor ja of geef de juiste klasse (bag)");
+			int o = 0;
+			while(o == 0) {
+				while(user_input.hasNext()) {
+					String bagName = user_input.next();
+					if(bagName.equals("J")){
+						this.fillBagWithFile(file);
+						o =1;
+					} else if(bagNames.contains(bagName)){
+						this.fillBagWithFile(file, bagName);
+						o = 1;
+					} else { 
+						System.out.println("Geef juiste klasse- (bag)naam in");
+					}
+					break;
+				}
 			}
+			System.out.println("Geef systeempad van het volgende bestand dat geklassificeerd moet worden");
 		}*/
 		user_input.close();
 		listOfFileNames.clear();
 	}
 	
-	public void fillBag(String trainTestPath, String bagName) throws IOException{
-		this.getFileNames(trainTestPath);
+	public void fillBagWithFile(String file) throws IOException{
+		for(int i = 0; i < bags.size(); i++){
+			if (bags.get(i).getName().equals(choice.get(file))){
+				bags.get(i).addWords(il.getWords());
+			}
+			bags.get(i).writeToFile();
+		}
+		il.clearWords();
+		System.out.println("Het bestand is toegevoegd aan " + choice.get(file));
+	}
+	
+	public void fillBagWithFile(String file, String bagName) throws IOException{
+		for(int i = 0; i < bags.size(); i++){
+			if (bags.get(i).getName().equals(bagName)){
+				bags.get(i).addWords(il.getWords());
+			} else {
+				for (String woord : il.getWords()){
+					if (bags.get(i).getBagWords().containsKey(woord)) {
+						bags.get(i).removeWord(woord);
+					}
+				}
+			}
+			bags.get(i).writeToFile();
+		}
+		il.clearWords();
+		System.out.println("Het bestand is toegevoegd aan " + bagName);
+	}
+	
+	public void fillBag(String path, String bagName) throws IOException{
+		this.getFileNames(path);
 		for(String iets : listOfFileNames){
-			il.tokenize(this.getFile(Path.path + trainTestPath + iets));
-			il.filterWords();
+			il.tokenize(this.getFile(Path.path + path + iets));
+			il.removeWordsOnAccurance();
 			for(int i = 0; i < bags.size(); i++){
 				if (bags.get(i).getName().equals(bagName)){
 					bags.get(i).addWords(il.getWords());
+					bags.get(i).writeToFile();
 				}
-				FileOutputStream fileOut = new FileOutputStream(Path.path + bagName);
-				ObjectOutputStream out = new ObjectOutputStream(fileOut);
-				out.writeObject(bags.get(i).getBagWords());
-				out.close();
-				fileOut.close();
 			}
 			il.clearWords();
 		}
@@ -121,12 +166,27 @@ public class Model {
 		choice.clear();
 		this.getFileNames(path);
 		for(String iets : listOfFileNames){
-			il.tokenize(this.getFile(Path.path + path + iets));
-			il.filterWords();
-			this.classify(il.getWords(), iets);
+			this.classifyFile(Path.path + path + iets);
+			il.clearWords();
 		}
 	}
 		
+	public void classifyFile (String fileName) throws IOException {
+		try {
+		il.tokenize(this.getFile(fileName));
+		} catch(FileNotFoundException i) {
+			System.out.println("Het bestand kon niet worden gevonden");
+			Scanner user_input = new Scanner(System.in);
+			while(user_input.hasNextInt()) {
+				this.classifyFile(user_input.next());
+			break;
+			}
+			user_input.close();
+		}
+		il.removeWordsOnAccurance();
+		this.classify(il.getWords(), fileName);
+	}
+	
 	public void classify(List<String> list, String fileName){
 		Classifier cl = new Classifier(list, bags);
 		cl.classify(list);
@@ -140,24 +200,20 @@ public class Model {
 			}
 		}
 		choice.put(fileName, highest);
+		System.out.println("Deze file is geklassificeerd als: " + highest);
 	}
 	
-	public Map<String, String> getChoices(){
-		return choice;
-	}
-	
-	//To be deleted
-	public void fillBags() throws IOException{
-		Scanner user_input = new Scanner(System.in);
-		for(int i = 0; i < notFilledBags.size(); i++){
-			System.out.println("Geef pad van map van traindata van " + notFilledBags.get(i));
-			while(user_input.hasNext()) {
-				String path = user_input.nextLine();
-				fillBag(path, notFilledBags.get(i));
-				break;
+	public void getChoices(){
+		int a = 0;
+		int b = 0;
+		for(String uit : choice.values()){
+			if(uit.equals("spam")){
+				a++;
+			} else if (uit.equals("ham")) {
+				b++;
 			}
 		}
-		user_input.close();
+		System.out.println("Spam: " + a + "Ham: " + b);
 	}
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -165,9 +221,9 @@ public class Model {
 		//ml.fillBag(menTrainPath, "man");
 		//ml.fillBag(womenTrainPath, "vrouw");
 		//ml.fillBags();
-		//ml.classifyAll(menTestPath);
-		//System.out.println(ml.getChoices());
-		//ml.classifyAll(womenTestPath);
-		//System.out.println(ml.getChoices());
+		ml.classifyAll(spamTestPath);
+		ml.getChoices();
+		ml.classifyAll(mailTestPath);
+		ml.getChoices();
 	}
 }
