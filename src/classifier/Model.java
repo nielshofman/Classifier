@@ -62,8 +62,7 @@ public class Model {
 					break;
 				}
 			}
-		}/*
-		user_input.nextLine();
+		}
 		System.out.println("Geef systeempad van het bestand dat geklassificeerd moet worden");
 		while(user_input.hasNext()) {
 			String file = user_input.next();
@@ -86,7 +85,7 @@ public class Model {
 				}
 			}
 			System.out.println("Geef systeempad van het volgende bestand dat geklassificeerd moet worden");
-		}*/
+		}
 		user_input.close();
 		listOfFileNames.clear();
 	}
@@ -203,27 +202,11 @@ public class Model {
 		System.out.println("Deze file is geklassificeerd als: " + highest);
 	}
 	
-	public void getChoices(){
-		int a = 0;
-		int b = 0;
-		for(String uit : choice.values()){
-			if(uit.equals("spam")){
-				a++;
-			} else if (uit.equals("ham")) {
-				b++;
-			}
-		}
-		System.out.println("Spam: " + a + "Ham: " + b);
+	public String getChoices(){
+		return choice.values().toString();
 	}
 	
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		Model ml = new Model();
-		//ml.fillBag(menTrainPath, "man");
-		//ml.fillBag(womenTrainPath, "vrouw");
-		//ml.fillBags();
-		ml.classifyAll(spamTestPath);
-		ml.getChoices();
-		ml.classifyAll(mailTestPath);
-		ml.getChoices();
 	}
 }

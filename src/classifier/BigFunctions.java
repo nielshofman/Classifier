@@ -5,7 +5,10 @@ import java.math.BigDecimal;
 
 /**
  * Several useful BigDecimal mathematical functions.
+ * Source: http://websfun.blogspot.nl/2010/12/bigdecimal-logarithms-and-other-higher.html
+ * @author Lance Dolan
  */
+
 public final class BigFunctions
 {
     /**
